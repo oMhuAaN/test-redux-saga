@@ -1,33 +1,33 @@
 import {
-  CHANGE_INPUT_VALUE,
-  ADD_TODO_ITEM,
-  DELETE_TODO_ITEM,
-  INIT_LIST
-} from '../actionTypes';
+  ACTION_SET_INPUT_VALUE,
+  ACTION_ADD_TODO_ITEM,
+  ACTION_DELETE_TODO_ITEM,
+  ACTION_SET_INIT_LIST
+} from '../ActionTypes';
 
 const defaultState = {
   inputValue: '',
   list: [],
 };
 
-const reducer = (state = defaultState, action) => {
-  if (action.type === CHANGE_INPUT_VALUE) {
+const Reducer = (state = defaultState, action) => {
+  if (action.type === ACTION_SET_INPUT_VALUE) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.inputValue = action.value;
     return newState;
   }
-  if (action.type === ADD_TODO_ITEM) {
+  if (action.type === ACTION_ADD_TODO_ITEM) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.list.push(newState.inputValue);
     newState.inputValue = '';
     return newState;
   }
-  if (action.type === DELETE_TODO_ITEM) {
+  if (action.type === ACTION_DELETE_TODO_ITEM) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.list.splice(action.index, 1);
     return newState;
   }
-  if (action.type === INIT_LIST) {
+  if (action.type === ACTION_SET_INIT_LIST) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.list = action.list;
     return newState;
@@ -35,4 +35,4 @@ const reducer = (state = defaultState, action) => {
   return state;
 }
 
-export default reducer;
+export default Reducer;

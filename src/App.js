@@ -1,38 +1,41 @@
 import React, { Component } from "react";
-import store from './redux/store';
+import Store from './Redux/Store';
 import {
-  getActionChangeInputValue,
-  getActionAddTodoItem,
-  getActionDeleteTodoItem,
-  getActionInitListAsync
-} from './redux/actionCreators';
+  ActionSetInputValue,
+  ActionAddTodoItem,
+  ActionDeleteTodoItem,
+  SagaGetInitList,
+  SagaGetInitList2
+} from './Redux/ActionCreators';
 import AppUi from './AppUi';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    store.subscribe(this.handleStoreChange);
+    Store.subscribe(this.handleStoreChange);
   }
-  state = store.getState();
+  state = Store.getState();
   componentDidMount() {
-    // 获取初始列表数据
-    store.dispatch(getActionInitListAsync());
+    const action = SagaGetInitList();
+    Store.dispatch(action);
+    const action2 = SagaGetInitList2();
+    Store.dispatch(action2); 
   }
 
   handleInputChange = (e) => {
-    const action = getActionChangeInputValue(e.target.value)
-    store.dispatch(action);
+    const action = ActionSetInputValue(e.target.value)
+    Store.dispatch(action);
   }
   handleStoreChange = () => {
-    this.setState(store.getState());
+    this.setState(Store.getState());
   }
   handleBtnClick = () => {
-    const action = getActionAddTodoItem();
-    store.dispatch(action);
+    const action = ActionAddTodoItem();
+    Store.dispatch(action);
   }
   handleItemDelete = (index) => {
-    const action = getActionDeleteTodoItem(index);
-    store.dispatch(action);
+    const action = ActionDeleteTodoItem(index);
+    Store.dispatch(action);
   }
 
   render() {

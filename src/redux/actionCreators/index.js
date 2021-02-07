@@ -1,43 +1,39 @@
 import {
-  CHANGE_INPUT_VALUE,
-  ADD_TODO_ITEM,
-  DELETE_TODO_ITEM,
-  INIT_LIST
-} from "../actionTypes";
+  ACTION_SET_INPUT_VALUE,
+  ACTION_ADD_TODO_ITEM,
+  ACTION_DELETE_TODO_ITEM,
+  ACTION_SET_INIT_LIST,
+  SAGA_GET_INIT_LIST,
+  SAGA_GET_INIT_LIST2
+} from "../ActionTypes";
 
-import { } from '../actionTypes';
-
-export const getActionChangeInputValue = (value) => ({
-  type: CHANGE_INPUT_VALUE,
+export const ActionSetInputValue = (value) => ({
+  type: ACTION_SET_INPUT_VALUE,
   value
 })
 
-export const getActionAddTodoItem = () => ({
-  type: ADD_TODO_ITEM
+export const ActionAddTodoItem = () => ({
+  type: ACTION_ADD_TODO_ITEM
 })
 
-export const getActionDeleteTodoItem = (index) => ({
-  type: DELETE_TODO_ITEM,
+export const ActionDeleteTodoItem = (index) => ({
+  type: ACTION_DELETE_TODO_ITEM,
   index
 })
 
-export const getActionInitList = (list) => ({
-  type: INIT_LIST,
+export const ActionSetInitList = (list) => ({
+  type: ACTION_SET_INIT_LIST,
   list
 })
 
-export const getActionInitListAsync = () => {
-  return async (dispatch) => {
-    let url = '/api/list';
-    try {
-      let response = await fetch(url);
-      const data = await response.json();
-      const action= getActionInitList(data);
-      dispatch(action);
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-}
+export const SagaGetInitList = () => ({
+  type: SAGA_GET_INIT_LIST
+})
+
+export const SagaGetInitList2 = () => ({
+  type: SAGA_GET_INIT_LIST2
+})
+
+
 
 
