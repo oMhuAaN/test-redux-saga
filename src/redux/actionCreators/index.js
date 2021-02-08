@@ -3,6 +3,7 @@ import {
   ACTION_ADD_TODO_ITEM,
   ACTION_DELETE_TODO_ITEM,
   ACTION_SET_INIT_LIST,
+
   SAGA_GET_INIT_LIST,
   SAGA_GET_INIT_LIST2
 } from "../ActionTypes";
@@ -25,6 +26,7 @@ export const ActionSetInitList = (list) => ({
   type: ACTION_SET_INIT_LIST,
   list
 })
+
 
 export const SagaGetInitList = () => ({
   type: SAGA_GET_INIT_LIST

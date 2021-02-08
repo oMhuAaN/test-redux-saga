@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Store from './Redux/Store';
+import { connect } from 'react-redux';
 import {
   ActionSetInputValue,
   ActionAddTodoItem,
@@ -10,45 +11,48 @@ import {
 import AppUi from './AppUi';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    Store.subscribe(this.handleStoreChange);
-  }
-  state = Store.getState();
+
   componentDidMount() {
     const action = SagaGetInitList();
     Store.dispatch(action);
     const action2 = SagaGetInitList2();
-    Store.dispatch(action2); 
-  }
-
-  handleInputChange = (e) => {
-    const action = ActionSetInputValue(e.target.value)
-    Store.dispatch(action);
-  }
-  handleStoreChange = () => {
-    this.setState(Store.getState());
-  }
-  handleBtnClick = () => {
-    const action = ActionAddTodoItem();
-    Store.dispatch(action);
-  }
-  handleItemDelete = (index) => {
-    const action = ActionDeleteTodoItem(index);
-    Store.dispatch(action);
+    Store.dispatch(action2);
   }
 
   render() {
+    const { inputValue, handleInputChange, handleBtnClick, handleItemDelete, list } = this.props;
     return (
       <AppUi
-        inputValue={this.state.inputValue}
-        handleInputChange={this.handleInputChange}
-        handleBtnClick={this.handleBtnClick}
-        handleItemDelete={this.handleItemDelete}
-        list={this.state.list}
+        inputValue={inputValue}
+        handleInputChange={handleInputChange}
+        handleBtnClick={handleBtnClick}
+        handleItemDelete={handleItemDelete}
+        list={list}
       />
     )
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    inputValue: state.inputValue,
+    list: state.list,
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleInputChange: (e) => {
+      const action = ActionSetInputValue(e.target.value)
+      dispatch(action);
+    },
+    handleBtnClick: () => {
+      const action = ActionAddTodoItem();
+      dispatch(action);
+    },
+    handleItemDelete: (index) => {
+      const action = ActionDeleteTodoItem(index);
+      dispatch(action);
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
